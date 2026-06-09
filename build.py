@@ -30,7 +30,7 @@ CONFIG = {
  },
  "negativas_globales": ["emulsion","asfalto","medio de contraste","temozolomida","proteccion personal","epp","vehiculo","videolaparoscopia","gestion documental","topografic","construccion accesibilidad"]
 }
-PER_LINEA = int(os.environ.get("PER_LINEA","8"))
+MAX_DETALLE = int(os.environ.get("MAX_DETALLE","400"))  # tope de seguridad de detalles a traer
 
 def norm(s):
     s = unicodedata.normalize("NFD", s or "").encode("ascii","ignore").decode().lower()
@@ -79,21 +79,20 @@ for it in lst:
     if ln:
         por_linea[ln].append(it.get("CodigoExterno"))
 
-# DET: detalle de una muestra por línea (descartando cerradas)
+# DET: detalle de TODAS las licitaciones clasificadas (descartando solo las cerradas)
 DET = {}
+todos_codigos = []
 for ln, codigos in por_linea.items():
-    n = 0
-    for c in codigos:
-        if n >= PER_LINEA: break
-        L = fetch_detalle(c); time.sleep(0.4)
-        if not L: continue
-        f = L.get("Fechas") or {}; cierre = f.get("FechaCierre"); comp = L.get("Comprador") or {}
-        try:
-            if cierre and datetime.fromisoformat(cierre.split(".")[0]) < HOY: continue
-        except Exception: pass
-        DET[c] = {"organismo": comp.get("NombreOrganismo"), "region": (comp.get("RegionUnidad") or "").strip(),
-                  "estado": L.get("Estado"), "cierre": cierre, "monto": L.get("MontoEstimado"), "tipo": L.get("Tipo")}
-        n += 1
+    todos_codigos.extend(codigos)
+for c in todos_codigos[:MAX_DETALLE]:
+    L = fetch_detalle(c); time.sleep(0.35)
+    if not L: continue
+    f = L.get("Fechas") or {}; cierre = f.get("FechaCierre"); comp = L.get("Comprador") or {}
+    try:
+        if cierre and datetime.fromisoformat(cierre.split(".")[0]) < HOY: continue
+    except Exception: pass
+    DET[c] = {"organismo": comp.get("NombreOrganismo"), "region": (comp.get("RegionUnidad") or "").strip(),
+              "estado": L.get("Estado"), "cierre": cierre, "monto": L.get("MontoEstimado"), "tipo": L.get("Tipo")}
 
 print(f"Activas: {len(RAW)} | con detalle: {len(DET)}")
 
