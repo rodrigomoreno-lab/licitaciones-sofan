@@ -61,11 +61,11 @@ footer{color:#8a93a2;font-size:11.5px;margin:16px 0}.empty{padding:26px;text-ali
 @media(max-width:560px){.wrap{padding:12px}.upd{margin-left:0;align-items:flex-start;text-align:left;width:100%}.grid{grid-template-columns:1fr}}
 </style></head><body>
 <div class="top"><div class="logo">licita<span>SOFAN</span></div><div class="tagmp">Mercado Público · API oficial</div>
-<div class="upd"><span class="lbl">Última actualización</span><span class="val">Lunes 08 de junio 2026, 21:55 hrs (hora de Chile)</span></div></div>
+<div class="upd"><span class="lbl">Última actualización</span><span class="val">Lunes 08 de junio 2026, 22:26 hrs (hora de Chile)</span></div></div>
 <div class="wrap">
 <h1>Sistema de Licitaciones · SOFAN</h1>
 <div class="lead">Búsqueda, clasificación, seguimiento y configuración de oportunidades en Mercado Público por línea de negocio.</div>
-<div class="updnote">⏱️ <b>Datos:</b> Lunes 08 de junio 2026, 21:55 hrs (hora de Chile). Editas las palabras clave abajo en <b>Configuración</b> y la clasificación se recalcula al instante. Tus marcas y palabras se guardan en este navegador.</div>
+<div class="updnote">⏱️ <b>Datos:</b> Lunes 08 de junio 2026, 22:26 hrs (hora de Chile). Editas las palabras clave abajo en <b>Configuración</b> y la clasificación se recalcula al instante. Tus marcas y palabras se guardan en este navegador.</div>
 <div class="views">
   <div class="viewbtn active" data-v="busqueda" onclick="setView('busqueda')">🔍 Búsqueda</div>
   <div class="viewbtn" data-v="config" onclick="setView('config')">⚙️ Configuración</div>
@@ -101,7 +101,7 @@ function norm(s){return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerC
 function color(ln){return CFG.lineas[ln]?CFG.lineas[ln].color:'#888'}
 function fmtMonto(m){if(!m)return'No disponible';try{return'$'+Number(m).toLocaleString('es-CL')}catch(e){return m}}
 function fmtFecha(f){if(!f)return'—';const d=new Date(f);if(isNaN(d))return f;return d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric'})}
-function dias(f){if(!f)return null;const d=new Date(f);if(isNaN(d))return null;return Math.ceil((d-new Date('2026-06-08T21:55:56-04:00'))/86400000)}
+function dias(f){if(!f)return null;const d=new Date(f);if(isNaN(d))return null;return Math.ceil((d-new Date('2026-06-08T22:26:34-04:00'))/86400000)}
 function nuble(r){return /uble/i.test(r||'')}
 function hl(nombre,match){if(!match)return nombre;const n=norm(nombre),m=norm(match),i=n.indexOf(m);if(i<0)return nombre;return nombre.slice(0,i)+'<b>'+nombre.slice(i,i+match.length)+'</b>'+nombre.slice(i+match.length)}
 function classify(){
@@ -174,7 +174,7 @@ function render(){
     </div>`}).join('');
   const nl=baseRows().filter(d=>!st(d.codigo).read&&!st(d.codigo).disc).length;
   document.getElementById('count').textContent=rows.length+' mostradas · '+nl+' no leídas';
-  document.getElementById('foot').textContent='Datos Lunes 08 de junio 2026, 21:55 hrs (hora de Chile) · Fuente API Mercado Público. '+RAW.length+' licitaciones activas escaneadas, '+RESULTS.length+' coinciden con tus palabras clave.';
+  document.getElementById('foot').textContent='Datos Lunes 08 de junio 2026, 22:26 hrs (hora de Chile) · Fuente API Mercado Público. '+RAW.length+' licitaciones activas escaneadas, '+RESULTS.length+' coinciden con tus palabras clave.';
 }
 /* ---- Configuración editable ---- */
 function renderConfig(){
