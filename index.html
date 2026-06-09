@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de Licitaciones SOFAN</title><style>
+:root{color-scheme:light}*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f5f6f8;color:#1c2330;font-size:13px}
+.top{background:#fff;border-bottom:1px solid #e6e9ef;padding:14px 22px;display:flex;align-items:center;gap:14px}
+.logo{font-weight:800;font-size:17px;letter-spacing:-.3px}.logo span{color:#ff5a36}
+.tagmp{font-size:12px;color:#1a7a40;border:1px solid #cfe9d8;background:#eafaf0;padding:4px 10px;border-radius:8px}
+.upd{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.upd .lbl{font-size:10px;color:#9aa3b0;text-transform:uppercase;letter-spacing:.4px}
+.upd .val{font-size:12px;font-weight:600;color:#34404f}
+.wrap{max-width:1280px;margin:0 auto;padding:18px 22px}
+h1{font-size:20px;font-weight:700}.lead{color:#5b6472;font-size:12.5px;margin-top:2px}
+.updnote{background:#eef3fb;border:1px solid #d8e3f5;border-radius:8px;padding:10px 13px;font-size:12px;color:#34506f;margin:12px 0}.updnote b{color:#1c2330}
+.views{display:flex;gap:6px;margin:14px 0 6px}
+.viewbtn{padding:7px 14px;border:1px solid #d9dee6;background:#fff;border-radius:8px;cursor:pointer;font-weight:600;color:#34404f}
+.viewbtn.active{background:#1c2330;color:#fff;border-color:#1c2330}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0 0;border-bottom:1px solid #e6e9ef}
+.tab{padding:9px 15px;cursor:pointer;font-weight:600;color:#5b6472;border-bottom:2px solid transparent;white-space:nowrap}
+.tab.active{color:#ff5a36;border-bottom-color:#ff5a36}
+.tab .cnt{font-size:11px;background:#eef2f8;color:#34506f;border-radius:999px;padding:1px 7px;margin-left:5px}
+.statusbar{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.pillf{padding:6px 12px;border:1px solid #d9dee6;background:#fff;border-radius:999px;cursor:pointer;font-size:12px;font-weight:600;color:#5b6472;display:flex;align-items:center;gap:6px}
+.pillf.active{background:#1c2330;color:#fff;border-color:#1c2330}
+.pillf .b{font-size:11px;background:#eef2f8;color:#34506f;border-radius:999px;padding:0 6px}
+.pillf.active .b{background:#ffffff33;color:#fff}
+.bar{display:flex;gap:10px;align-items:center;margin:12px 0}
+.bar input{flex:1;max-width:420px;padding:8px 12px;border:1px solid #d9dee6;border-radius:8px;font-size:13px}
+.bar select{padding:8px 10px;border:1px solid #d9dee6;border-radius:8px}
+.count{margin-left:auto;color:#7a8494;font-size:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e6e9ef;border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:10px 11px;border-bottom:1px solid #eef1f5;vertical-align:top;font-size:12.5px}
+th{background:#fafbfc;color:#7a8494;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px}
+tr:hover td{background:#fcfdff}
+tr.read td{background:#fbfcfd}tr.read .nombre{font-weight:500;color:#5b6472}
+tr.disc{opacity:.45}
+.dot{width:9px;height:9px;border-radius:50%;background:#ff5a36;display:inline-block;margin-top:4px}
+.dot.off{background:transparent;border:1px solid #d9dee6}
+.nombre{font-weight:600;max-width:330px;cursor:pointer}.nombre b{color:#ff5a36}
+.org{color:#5b6472;max-width:185px}
+.codigo{font-family:ui-monospace,monospace;font-size:11px;color:#8a93a2;text-decoration:none}
+.tipo{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:#efe7fb;color:#7c4dff;display:inline-block}
+.tipo.LE,.tipo.LP,.tipo.LR,.tipo.LS{background:#fde7df;color:#d4541f}
+.ln{font-size:11px;font-weight:600;padding:2px 9px;border-radius:6px;border:1px solid;display:inline-block;white-space:nowrap}
+.monto{font-weight:600;white-space:nowrap}.cierre{white-space:nowrap}.cierre .d{font-size:11px;color:#9a6b00}
+.nb{display:inline-block;font-size:10px;font-weight:700;background:#1456c4;color:#fff;border-radius:5px;padding:1px 6px;margin-left:5px}
+.acts{display:flex;gap:7px;font-size:15px}
+.act{cursor:pointer;opacity:.4;transition:.12s;user-select:none}
+.act:hover{opacity:.85}.act.on{opacity:1}
+.act.star.on{filter:drop-shadow(0 0 0 #f5a623)}
+.cfgcard{background:#fff;border:1px solid #e6e9ef;border-radius:10px;padding:18px;margin-bottom:14px}
+.cfgcard h3{font-size:14px;display:flex;align-items:center;gap:8px}.cfgcard .sub{color:#7a8494;font-size:12px;margin:3px 0 12px}
+.kw{display:inline-block;font-size:11.5px;background:#f1f4f9;border:1px solid #e2e8f1;color:#34404f;border-radius:7px;padding:3px 9px;margin:3px 4px 3px 0}
+.hint{background:#fdf6e3;border:1px solid #f0e2bb;border-radius:8px;padding:10px 13px;font-size:12px;color:#5f5326;margin-top:10px}
+.adv{margin-top:10px;font-size:12px;color:#5b6472}.adv b{color:#34404f}
+footer{color:#8a93a2;font-size:11.5px;margin:16px 0}.empty{padding:26px;text-align:center;color:#8a93a2}
+.resetbtn{font-size:11px;color:#a23b3b;cursor:pointer;text-decoration:underline;margin-left:8px}
+</style></head><body>
+<div class="top"><div class="logo">licita<span>SOFAN</span></div><div class="tagmp">Mercado Público · API oficial</div>
+<div class="upd"><span class="lbl">Última actualización</span><span class="val">Lunes 08 de junio 2026, 20:47 hrs (hora de Chile)</span></div></div>
+<div class="wrap">
+<h1>Sistema de Licitaciones · SOFAN</h1>
+<div class="lead">Búsqueda, clasificación y seguimiento de oportunidades en Mercado Público por línea de negocio. Modelo replicado de LicitaLAB sobre la API oficial de ChileCompra.</div>
+<div class="updnote">⏱️ <b>Última actualización:</b> Lunes 08 de junio 2026, 20:47 hrs (hora de Chile). &nbsp;<b>¿Cómo se actualiza?</b> (1) Automático: la tarea programada “Monitoreo Licitaciones SOFAN” puede refrescar este panel cada día hábil a las 08:30. (2) Manual: pedíme “actualiza el sistema de licitaciones”. Tus marcas de seguimiento/leídas se conservan al actualizar.</div>
+<div class="views">
+  <div class="viewbtn active" data-v="busqueda" onclick="setView('busqueda')">🔍 Búsqueda</div>
+  <div class="viewbtn" data-v="config" onclick="setView('config')">⚙️ Configuración</div>
+</div>
+<div id="view-busqueda">
+  <div class="tabs" id="tabs"></div>
+  <div class="statusbar" id="statusbar"></div>
+  <div class="bar">
+    <input id="q" placeholder="Filtra por nombre, organismo o código…" oninput="render()">
+    <select id="sort" onchange="render()">
+      <option value="cierre">Orden: cierre más próximo</option>
+      <option value="monto">Orden: mayor monto</option>
+      <option value="linea">Orden: línea de negocio</option>
+    </select>
+    <span class="count" id="count"></span>
+  </div>
+  <table><thead><tr>
+    <th></th><th>ID</th><th>Nombre</th><th>Organismo</th><th>Tipo</th><th>Región</th><th>Monto disp.</th><th>Cierre</th><th>Línea</th><th>Acciones</th>
+  </tr></thead><tbody id="rows"></tbody></table>
+  <footer id="foot"></footer>
+</div>
+<div id="view-config" style="display:none"></div>
+</div>
+<script>
+const DATA=[{"linea": "Capacitacion", "codigo": "1057385-33-LE26", "match": "capacitacion", "nombre": "CURSOS CAPACITACION DEL PLAN ANUAL  LEY N18.834", "organismo": "SERVICIO DE SALUD ANTOFAGASTA HOSPITAL 21 DE MAYO TALTAL", "region": "Región de Antofagasta", "estado": "Publicada", "cierre": "2026-06-09T15:00:00", "publicacion": "2026-06-01T11:06:53.9", "monto": 11693339.0, "tipo": "LE"}, {"linea": "Inclusion", "codigo": "2450-47-LE26", "match": "inclusion", "nombre": "ADQUISICIÓN SET DE PULSERAS DE COMUNICACIÓN AUMENTATIVA PROGRAMA APOYO A INSTITUCIONES EDUCATIVAS PARA LA INCLUSIÓN DE ESTUDIANTES CON DISCAPACIDAD FONDO SENADIS", "organismo": "ILUSTRE MUNICIPALIDAD DE LA SERENA", "region": "Región de Coquimbo", "estado": "Publicada", "cierre": "2026-06-09T15:30:00", "publicacion": "2026-05-29T16:42:36.3", "monto": null, "tipo": "LE"}, {"linea": "Inclusion", "codigo": "3894-36-LE26", "match": "discapacidad", "nombre": "TRANSPORTE DE PASAJEROS PARA PERSONAS CON DISCAPACIDAD", "organismo": "I MUNICIPALIDAD DE LAMPA", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-10T15:00:00", "publicacion": "2026-05-29T13:42:47.677", "monto": 20000000.0, "tipo": "LE"}, {"linea": "Publicidad y medios", "codigo": "1867-17-LR26", "match": "campana comunicacional", "nombre": "Servicio de  la Campaña Campaña Comunicacional SMO", "organismo": "DIRECCION GENERAL DE MOVILIZACIONN NACIONAL", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-11T12:00:00", "publicacion": "2026-05-12T09:24:00", "monto": null, "tipo": "LR"}, {"linea": "Publicidad y medios", "codigo": "1224792-6-LE26", "match": "audiovisual", "nombre": "SUMINISTRO SERVICIO DE ILUMINACION Y AUDIOVISUAL", "organismo": "FUNDACION PARA EL DESARROLLO DE LA CULTURA Y LAS ARTES DE LA COMUNA DE", "region": "Región de Magallanes y de la Antártica", "estado": "Publicada", "cierre": "2026-06-11T15:10:00", "publicacion": "2026-05-22T17:35:00", "monto": null, "tipo": "LE"}, {"linea": "Publicidad y medios", "codigo": "2295-63-LE26", "match": "produccion de eventos", "nombre": "CONTRATACIÓN DE SERVICIO DE PRODUCCIÓN DE EVENTOS Y OTROS PARA CEREMONIAS DE CIERRE PROYECTOS: “SOMOS BARRIO” SECTOR LAS AMÉRICAS Y SECTOR JOSÉ MIGUEL CARRERA", "organismo": "I MUNICIPALIDAD DE TALCA", "region": "Región del Maule", "estado": "Publicada", "cierre": "2026-06-12T10:00:00", "publicacion": "2026-06-03T11:45:10.073", "monto": null, "tipo": "LE"}, {"linea": "Publicidad y medios", "codigo": "1057432-35-L126", "match": "audiovisual", "nombre": "ARRIENDO DE SALÓN CON EQUIPAMIENTO AUDIOVISUAL Y SERVICIOS DE CATERING PARA JORNADA DE CAPACITACIÓN", "organismo": "SERVICIO DE SALUD CONCEPCION", "region": "Región del Biobío", "estado": "Publicada", "cierre": "2026-06-12T15:00:00", "publicacion": "2026-06-01T12:15:00", "monto": 4799999.0, "tipo": "L1"}, {"linea": "Servicios laborales", "codigo": "4517-2-LE26", "match": "servicios profesionales", "nombre": "Servicios profesionales de registro de fotografías", "organismo": "SERVICIO NACIONAL DEL PATRIMONIO CULTURAL", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-12T17:00:00", "publicacion": "2026-06-01T10:22:14.187", "monto": 16000000.0, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057492-88-LE26", "match": "capacitacion", "nombre": "SERVICIO DE CAPACITACIÓN PARA FUNCIONARIOS GRUPO 2", "organismo": "HOSPITAL ORIENTE DR LUIS TISNE BROUSSE", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-15T15:00:00", "publicacion": "2026-06-03T14:43:58.963", "monto": null, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057511-17-L126", "match": "capacitacion", "nombre": "DOCENCIA PARA CURSOS DE CAPACITACION SEGUNDO SEMESTRE", "organismo": "HOSPITAL COMUNITARIO DE SALUD FAMILIAR DE BULNES", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-15T15:00:00", "publicacion": "2026-06-05T09:00:59.45", "monto": 3990766.0, "tipo": "L1"}, {"linea": "Publicidad y medios", "codigo": "1126922-19-LE26", "match": "audiovisual", "nombre": "SERVICIOS DE PRODUCCIÓN AUDIOVISUAL", "organismo": "SERVICIO LOCAL DE EDUCACION PUBLICA DE LLANQUIHUE", "region": "Región de los Lagos", "estado": "Publicada", "cierre": "2026-06-15T15:01:00", "publicacion": "2026-06-04T11:55:14.61", "monto": null, "tipo": "LE"}, {"linea": "Servicios laborales", "codigo": "162-12-LE26", "match": "servicios profesionales", "nombre": "Servicios profesionales para Evaluaciones Médicas", "organismo": "SUBSECRETARIA DE SALUD PUBLICA", "region": "Región de los Lagos", "estado": "Publicada", "cierre": "2026-06-15T16:00:00", "publicacion": "2026-06-04T10:29:33.447", "monto": null, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057541-26-LE26", "match": "capacitacion", "nombre": "CONVENIO DE COFFEE BREAKS PARA CAPACITACION 2026", "organismo": "DIRECCION SERVICIO DE SALUD TALCAHUANO", "region": "Región del Biobío", "estado": "Publicada", "cierre": "2026-06-15T16:00:00", "publicacion": "2026-06-05T11:17:32.683", "monto": 13084500.0, "tipo": "LE"}, {"linea": "Servicios laborales", "codigo": "3713-3-LE26", "match": "servicios profesionales", "nombre": "Servicios profesionales odontológicos", "organismo": "I MUNICIPALIDAD DE LOS VILOS", "region": "Región de Coquimbo", "estado": "Publicada", "cierre": "2026-06-15T19:47:00", "publicacion": "2026-06-05T15:04:57.237", "monto": null, "tipo": "LE"}, {"linea": "Servicios laborales", "codigo": "1057544-189-CO26", "match": "servicios profesionales", "nombre": "Contratación de Servicios Profesionales y Técnicos para los Servicios de Cirugía y Traumatología", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "region": "Región del Biobío", "estado": "Publicada", "cierre": "2026-06-16T15:01:00", "publicacion": "2026-06-05T09:34:22.787", "monto": 60000000.0, "tipo": "CO"}, {"linea": "Servicios laborales", "codigo": "1057544-190-LP26", "match": "servicios profesionales", "nombre": "Contratación de Servicios Profesionales y Administrativos para la Unidad de Gestión GES del Hospital Las Higueras", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "region": "Región del Biobío", "estado": "Publicada", "cierre": "2026-06-16T15:01:00", "publicacion": "2026-06-05T11:41:14.9", "monto": 185400000.0, "tipo": "LP"}, {"linea": "Inclusion", "codigo": "3885-36-LE26", "match": "accesibilidad universal", "nombre": "MEJORAMIENTO SEGURIDAD ACCESIBILIDAD UNIVERSAL Y SERVICIOS HIGIENICOS ESCUELA VERTIENTE DEL SABER", "organismo": "I MUNICIPALIDAD DE PICA", "region": "Región de Tarapacá", "estado": "Publicada", "cierre": "2026-06-18T13:00:00", "publicacion": "2026-06-03T18:03:59.31", "monto": 50000000.0, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057490-42-LE26", "match": "capacitacion", "nombre": "CURSOS DE CAPACITACIÓN PARA FUNCIONARIOS", "organismo": "Instituto de Neurocirugía", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-19T18:00:00", "publicacion": "2026-06-08T11:49:19.857", "monto": 8300000.0, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057500-43-LE26", "match": "capacitacion", "nombre": "CONTRATACIÓN DE 07 CURSOS  DE CAPACITACIÓN", "organismo": "SERVICIO DE SALUD METROPOLITANO SUR ORIENTE", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-22T15:01:00", "publicacion": "2026-06-01T15:41:21.51", "monto": 22800000.0, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057536-52-LE26", "match": "capacitacion", "nombre": "DIPLOMADO Y CURSOS PARA PROGRAMA DE CAPACITACION", "organismo": "SERVICIO SALUD DEL RELONCAVI", "region": "Región de los Lagos", "estado": "Publicada", "cierre": "2026-06-22T16:00:00", "publicacion": "2026-06-08T09:05:03.087", "monto": null, "tipo": "LE"}, {"linea": "Capacitacion", "codigo": "1057545-61-LP26", "match": "capacitacion", "nombre": "Cursos de capacitación de programa APS", "organismo": "SERVICIO DE SALUD LOS RIOS", "region": "Región de Los Ríos", "estado": "Publicada", "cierre": "2026-06-22T16:19:00", "publicacion": "2026-06-01T15:54:18.777", "monto": null, "tipo": "LP"}, {"linea": "Publicidad y medios", "codigo": "1867-24-LP26", "match": "campana comunicacional", "nombre": "Servicio de Campaña Comunicacional de Armas.", "organismo": "DIRECCION GENERAL DE MOVILIZACIONN NACIONAL", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-06-25T12:00:00", "publicacion": "2026-06-04T16:10:48.263", "monto": null, "tipo": "LP"}, {"linea": "Publicidad y medios", "codigo": "1422035-2-LP26", "match": "plan de medios", "nombre": "SERVICIO DE PLAN DE MEDIOS PARA LA CRDP MAULE", "organismo": "CORPORACION REGIONAL DE DESARROLLO PRODUCTIVO DE LA REGION DEL MAULE", "region": "Región del Maule", "estado": "Publicada", "cierre": "2026-06-30T15:10:00", "publicacion": "2026-06-08T14:50:57.327", "monto": null, "tipo": "LP"}, {"linea": "Publicidad y medios", "codigo": "2345-88-LR26", "match": "produccion de eventos", "nombre": "Servicio de Producción de Eventos dirigido a los vecinos durante el Segundo Semestre 2026", "organismo": "I MUNICIPALIDAD DE LAS CONDES", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-07-06T15:01:00", "publicacion": "2026-06-04T11:49:01.14", "monto": null, "tipo": "LR"}, {"linea": "Servicios laborales", "codigo": "1415857-3-LR26", "match": "servicios profesionales", "nombre": "SERVICIOS PROFESIONALES DE APOYO A SEGUIMIENTO Y ACOMPAÑAMIENTO DE GESTIÓN SOCIAL A BENEFICIARIOS DEL ISL", "organismo": "INSTITUTO DE SEGURIDAD LABORAL", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": "2026-07-06T15:01:00", "publicacion": "2026-06-03T16:28:25.29", "monto": 532350000.0, "tipo": "LR"}, {"linea": "Servicios laborales", "codigo": "425-26-LS25", "match": "servicios profesionales", "nombre": "Servicios Profesionales Especializados para Asesoramiento Técnico en Proyecto de Con-servación del Palacio de Tribunales", "organismo": "CORP ADMINISTRATIVA DEL PODER JUDICIAL", "region": "Región Metropolitana de Santiago", "estado": "Publicada", "cierre": null, "publicacion": "2025-03-31T16:31:22.653", "monto": null, "tipo": "LS"}, {"linea": "Servicios laborales", "codigo": "4429-50-LS26", "match": "servicios profesionales", "nombre": "Servicios Profesionales Implementación Ley 21.180", "organismo": "MUNICIPALIDAD DE HUALPEN", "region": "Región del Biobío", "estado": "Publicada", "cierre": null, "publicacion": "2026-06-01T14:29:27.603", "monto": 20000000.0, "tipo": "LS"}];const CFG={"lineas": {"Publicidad y medios": {"color": "#7c4dff", "keywords": ["medios publicitarios", "publicidad en television", "servicios relacionados con la television", "avisos en television", "publicidad en radio", "servicios relacionados con la radio", "administracion de radioemisoras", "avisos en radio", "publicidad en internet", "publicidad en periodicos", "servicios audiovisuales", "capsulas audiovisuales", "capsulas de video", "capsulas radiales", "diseno grafico", "servicios de diagramacion", "diseno de pagina web", "diseno sitio web", "produccion de video", "campanas comunicacionales", "campana comunicacional", "campanas de marketing", "plan de medios", "planes de medios", "servicios de diseno grafico", "audiovisual", "lengua de senas", "lenguaje de senas", "audio visuales", "produccion expo rural", "diseno editorial", "apoyo comunicacional", "procesos creativos", "produccion capsulas", "campana redes sociales", "plan medios nacional", "produccion piezas", "plan medios fndr", "produccion videos tutoriales", "videos explicativos", "accesibilidad audiovisual", "diseno piezas", "actualizacion identidad visual", "plan medios", "videos difusion", "plan avisaje", "agencia publicidad", "asesoria comunicacion digital", "asesoria comunicaciones", "animacion", "animacion digital", "produccion de eventos"]}, "Servicios laborales": {"color": "#00897b", "keywords": ["servicio de promocion y planificacion de empleo", "servicio de digitacion de datos", "servicios de evaluacion de curriculum vitae", "personal administrativo temporal", "servicios profesionales", "inclusion laboral", "servicios de contratacion de personal"]}, "Inclusion": {"color": "#e53935", "keywords": ["inclusion laboral", "inclusion", "discapacidad", "discapacitados", "accesibilidad universal", "educacion de adultos"]}, "Capacitacion": {"color": "#1e88e5", "keywords": ["capacitacion", "entrenamiento"]}}, "negativas_globales": ["emulsion", "asfalto", "medio de contraste", "temozolomida", "proteccion personal", "epp", "vehiculo", "videolaparoscopia", "gestion documental", "topografic", "construccion accesibilidad"]};const LINEAS=Object.keys(CFG.lineas);
+const SKEY='sofan_lic_state_v1';
+let STATE=JSON.parse(localStorage.getItem(SKEY)||'{}');
+function saveState(){localStorage.setItem(SKEY,JSON.stringify(STATE))}
+function st(c){return STATE[c]||(STATE[c]={read:false,track:false,disc:false})}
+let activeTab='Todo';let statusFilter='todas';
+function norm(s){return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
+function color(ln){return CFG.lineas[ln]?CFG.lineas[ln].color:'#888'}
+function fmtMonto(m){if(!m)return'No disponible';try{return'$'+Number(m).toLocaleString('es-CL')}catch(e){return m}}
+function fmtFecha(f){if(!f)return'—';const d=new Date(f);if(isNaN(d))return f;return d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric'})}
+function dias(f){if(!f)return null;const d=new Date(f);if(isNaN(d))return null;return Math.ceil((d-new Date('2026-06-08T08:30:00-04:00'))/86400000)}
+function nuble(r){return /uble/i.test(r||'')}
+function highlight(nombre,match){if(!match)return nombre;const n=norm(nombre),m=norm(match);const i=n.indexOf(m);if(i<0)return nombre;return nombre.slice(0,i)+'<b>'+nombre.slice(i,i+match.length)+'</b>'+nombre.slice(i+match.length)}
+function baseRows(){return DATA.filter(d=>activeTab==='Todo'||d.linea===activeTab)}
+function passStatus(d){const s=st(d.codigo);
+  if(statusFilter==='todas')return !s.disc;
+  if(statusFilter==='noleidas')return !s.read&&!s.disc;
+  if(statusFilter==='seguimiento')return s.track&&!s.disc;
+  if(statusFilter==='descartadas')return s.disc;
+  return true}
+function tabs(){
+  const counts={Todo:DATA.filter(d=>!st(d.codigo).disc).length};
+  LINEAS.forEach(l=>counts[l]=DATA.filter(d=>d.linea===l&&!st(d.codigo).disc).length);
+  document.getElementById('tabs').innerHTML=['Todo',...LINEAS].map(t=>`<div class="tab ${t===activeTab?'active':''}" onclick="setTab(this.dataset.t)" data-t="${t}">${t}<span class="cnt">${counts[t]||0}</span></div>`).join('');
+}
+function statusbar(){
+  const b=baseRows();
+  const c={todas:b.filter(d=>!st(d.codigo).disc).length,
+    noleidas:b.filter(d=>!st(d.codigo).read&&!st(d.codigo).disc).length,
+    seguimiento:b.filter(d=>st(d.codigo).track&&!st(d.codigo).disc).length,
+    descartadas:b.filter(d=>st(d.codigo).disc).length};
+  const defs=[['todas','Todas'],['noleidas','No leídas'],['seguimiento','⭐ En seguimiento'],['descartadas','Descartadas']];
+  document.getElementById('statusbar').innerHTML=defs.map(([k,l])=>`<div class="pillf ${k===statusFilter?'active':''}" onclick="setStatus('${k}')">${l}<span class="b">${c[k]}</span></div>`).join('')
+    +`<span class="resetbtn" onclick="resetState()">Reiniciar marcas</span>`;
+}
+function setTab(t){activeTab=t;tabs();statusbar();render()}
+function setStatus(s){statusFilter=s;statusbar();render()}
+function toggle(c,field){const s=st(c);s[field]=!s[field];if(field==='disc'&&s.disc){}saveState();tabs();statusbar();render()}
+function markRead(c){const s=st(c);if(!s.read){s.read=true;saveState();tabs();statusbar();render()}}
+function resetState(){if(confirm('¿Borrar todas las marcas de leídas, seguimiento y descartadas?')){STATE={};saveState();tabs();statusbar();render()}}
+function render(){
+  const q=norm(document.getElementById('q').value);const sort=document.getElementById('sort').value;
+  let rows=baseRows().filter(passStatus);
+  if(q)rows=rows.filter(d=>norm(d.nombre).includes(q)||norm(d.organismo).includes(q)||norm(d.codigo).includes(q));
+  if(sort==='cierre')rows.sort((a,b)=>(a.cierre||'z').localeCompare(b.cierre||'z'));
+  else if(sort==='monto')rows.sort((a,b)=>(b.monto||0)-(a.monto||0));
+  else rows.sort((a,b)=>a.linea.localeCompare(b.linea));
+  const tb=document.getElementById('rows');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="10" class="empty">Sin resultados para este filtro.</td></tr>';}
+  else tb.innerHTML=rows.map(d=>{const s=st(d.codigo);
+    const dr=dias(d.cierre);const drt=dr!=null?(dr<=2?`<div class="d">⚠ ${dr}d</div>`:`<div class="d">en ${dr}d</div>`):'';
+    const link='https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion='+encodeURIComponent(d.codigo);
+    return `<tr class="${s.read?'read':''} ${s.disc?'disc':''}">
+     <td><span class="dot ${s.read?'off':''}" title="${s.read?'Leída':'No leída'}"></span></td>
+     <td><a class="codigo" href="${link}" target="_blank" rel="noopener" onclick="markRead('${d.codigo}')">${d.codigo}</a></td>
+     <td class="nombre" onclick="markRead('${d.codigo}')">${highlight(d.nombre,d.match)}</td>
+     <td class="org">${d.organismo||''}</td>
+     <td><span class="tipo ${d.tipo||''}">${d.tipo||'—'}</span></td>
+     <td>${(d.region||'—').replace('Región ','')}${nuble(d.region)?'<span class="nb">ÑUBLE</span>':''}</td>
+     <td class="monto">${fmtMonto(d.monto)}</td>
+     <td class="cierre">${fmtFecha(d.cierre)}${drt}</td>
+     <td><span class="ln" style="color:${color(d.linea)};border-color:${color(d.linea)}33;background:${color(d.linea)}11">${d.linea}</span></td>
+     <td><div class="acts">
+       <span class="act star ${s.track?'on':''}" title="Seguimiento" onclick="toggle('${d.codigo}','track')">${s.track?'⭐':'☆'}</span>
+       <span class="act ${s.read?'on':''}" title="${s.read?'Marcar no leída':'Marcar leída'}" onclick="toggle('${d.codigo}','read')">${s.read?'✅':'⬜'}</span>
+       <span class="act ${s.disc?'on':''}" title="${s.disc?'Restaurar':'Descartar'}" onclick="toggle('${d.codigo}','disc')">${s.disc?'↩️':'🗑️'}</span>
+     </div></td>
+    </tr>`}).join('');
+  const nl=baseRows().filter(d=>!st(d.codigo).read&&!st(d.codigo).disc).length;
+  document.getElementById('count').textContent=rows.length+' mostradas · '+nl+' no leídas';
+  document.getElementById('foot').textContent='Snapshot '+new Date('2026-06-08T08:30:00-04:00').toLocaleString('es-CL')+' · Fuente: API Mercado Público (ChileCompra). Tus marcas se guardan en este navegador. Clic en el código abre la ficha oficial.';
+}
+function renderConfig(){
+  const c=document.getElementById('view-config');let h='';
+  LINEAS.forEach(ln=>{const d=CFG.lineas[ln];
+    h+=`<div class="cfgcard"><h3><span class="ln" style="color:${d.color};border-color:${d.color}33;background:${d.color}11">${ln}</span> · ${d.keywords.length} palabras clave</h3>
+     <div class="sub">Palabras o frases relacionadas. Aparecen oportunidades que contengan estas palabras (exactas o similares).</div>
+     <div>${d.keywords.map(k=>`<span class="kw">${k}</span>`).join('')}</div></div>`;});
+  h+=`<div class="cfgcard"><h3>Configuración avanzada (opcional)</h3>
+   <div class="adv"><b>Palabras negativas:</b> ${CFG.negativas_globales.join(', ')}.<br>
+   <b>Otros filtros:</b> categoría de organismo, organismo específico, rubros ONU, región.<br>
+   <b>Tipo de búsqueda:</b> Licitaciones · Compras Ágiles · Tratos Directos · Cotizaciones · Consultas al Mercado.</div>
+   <div class="hint">Modelo replicado de LicitaLAB. Estas palabras clave alimentan el monitoreo diario vía la API de Mercado Público.</div></div>`;
+  c.innerHTML=h;
+}
+function setView(v){document.querySelectorAll('.viewbtn').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  document.getElementById('view-busqueda').style.display=v==='busqueda'?'':'none';
+  document.getElementById('view-config').style.display=v==='config'?'':'none';}
+tabs();statusbar();render();renderConfig();
+</script></body></html>
